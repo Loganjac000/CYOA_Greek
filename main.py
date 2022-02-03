@@ -8,7 +8,7 @@ hp = 10 # The current hp of the player
 armorLevel = 0 # How good the armor the player is currently wearing
 name = ' ' # Players name
 god = ' ' # Name of the players god
-godOrGoddess = 'Parent' # Gender of the players parent and wether to refer to them as god or goddess
+godOrGoddess = 'Parent' # Gender of the players parent and wether to refer to them as god or goddess nr k,jgbn
 fatherOrMother = 'Parent'
 inventoryFull = False
 
@@ -36,72 +36,33 @@ y2 = ['E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_']
 y1 = ['E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_']
 y0 = ['E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_']
 
+revealY4 = ['E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_']
+revealY3 = ['E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_']
+revealY2 = ['E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_']
+revealY1 = ['E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_']
+revealY0 = ['E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_']
+
 roomTypes = {
   #Name  bottom  middle  top
   'FW' : [' | ', '-+-', ' | '], # FW 'Four Way'
-  #[ | ]
-  #[-+-]
-  #[ | ]
+  #[ | ] Example top
+  #[-+-] Example middle
+  #[ | ] Example bottom
   'V~' : [' | ', ' | ', ' | '], # V~ 'Vertical' 
-  #[ | ]
-  #[ | ]
-  #[ | ]
   'H~' : ['   ', '---', '   '], # H~ 'Horizantal'
-  #[   ]
-  #[---]
-  #[   ]
   'NB' : ['   ', '-+-', ' | '], # NB 'Everything but the bottom'
-  #[ | ]
-  #[-+-]
-  #[   ]
   'NL' : [' | ', ' +-', ' | '], # NL 'Everything but the left'
-  #[ | ]
-  #[ +-]
-  #[ | ]
   'NR' : [' | ', '-+ ', ' | '], # NR 'Everything but the right'
-  #[ | ]
-  #[-+ ]
-  #[ | ]
   'NU' : [' | ', '-+-', '   '], # NB 'Everything but the top'
-  #[   ]
-  #[-+-]
-  #[ | ]
   'UL' : ['   ', '-+ ', ' | '], # UL 'Goes up and then left'
-  #[   ]
-  #[ +-]
-  #[ | ]
   'UR' : ['   ', ' +-', ' | '], # UR 'Goes up and then right'
-  #[ | ]
-  #[ +-]
-  #[   ]
   'BL' : [' | ', '-+ ', '   '], # BL 'Goes from the left then down'
-  #[   ]
-  #[-+ ]
-  #[ | ]
   'BR' : [' | ', ' +-', '   '], # BR 'Goes from the right then down'
-  #[   ]
-  #[ +-]
-  #[ | ]
   'DU' : ['   ', '   ', ' | '], # DU 'Dead end from the top'
-  #[ | ]
-  #[   ]
-  #[   ]
   'DL' : ['   ', '-  ', '   '], # DL 'Dead end from the left'
-  #[   ]
-  #[-  ]
-  #[   ]  
   'DB' : [' | ', '   ', '   '], # DB 'Dead end from the bottom'
-  #[   ]
-  #[   ]
-  #[ | ]
   'DR' : ['   ', '  -', '   '], # DR 'Dead end from the right'
-  #[   ]
-  #[  -]
-  #[   ]
-  'E_' : ['   ', '   ', '   '] # E_ 'Empty'
-  #[   ]
-  #[   ]
-  #[   ]
+  'E_' : ['   ', '   ', '   ']  # E_ 'Empty'
 }
 
 # ---------------------------------------------------------------------- #
@@ -285,20 +246,20 @@ def displayMiniMap():
   system('cls')
   print('_' * 65)
   print('|' + ('IMPORTANT INFO:'.center(25)) + '|  ' + ('Mini Map:' + ' ' * 20) + 'Exit  |')
-  print('|' + (' ' * 25) + '|  ' + f'{displayLine(y4, 2)}' + (' ' * 2) + '|')
-  print('|' + ('  Follow the lines NOT   ') + '|  ' + f'{displayLine(y4, 1)}' + (' ' * 2) + '|')
-  print('|' + ('the spaces'.center(25)) + '|  ' + f'{displayLine(y4, 0)}' + (' ' * 2) + '|')
-  print('|' + (' '.center(25)) + '|  ' + f'{displayLine(y3, 2)}' + (' ' * 2) + '|')
-  print('|' + (' \'|\' Is a vertical path.'.center(25)) + '|  ' + f'{displayLine(y3, 1)}' + (' ' * 2) + '|')
-  print('|' + (' \'+\' Is a turn or split  ') + '|  ' + f'{displayLine(y3, 0)}' + (' ' * 2) + '|')
-  print('|' + ('path.'.center(25)) + '|  ' + f'{displayLine(y2, 2)}' + (' ' * 2) + '|')
-  print('|' + (' \'-\' Is a side path.'.center(25)) + '|  ' + f'{displayLine(y2, 1)}' + (' ' * 2) + '|')
-  print('|' + (' ' * 25) + '|  ' + f'{displayLine(y2, 0)}' + (' ' * 2) + '|')
-  print('|' + ('You start at the bottom'.center(25)) + '|  ' + f'{displayLine(y1, 2)}' + (' ' * 2) + '|')
-  print('|' + ('left and end in the'.center(25)) + '|  ' + f'{displayLine(y1, 1)}' + (' ' * 2) + '|')
-  print('|' + ('top right!'.center(25)) + '|  ' + f'{displayLine(y1, 0)}' + (' ' * 2) + '|')
-  print('|' + (' ' * 25) + '|  ' + f'{displayLine(y0, 2)}' + (' ' * 2) + '|')
-  print('|' + (' ' * 25) + '|  ' + f'{displayLine(y0, 1)}' + (' ' * 2) + '|')
+  print('|' + (' ' * 25) + '|  ' + f'{displayLine(revealY4, 2)}' + (' ' * 2) + '|')
+  print('|' + ('  Follow the lines NOT   ') + '|  ' + f'{displayLine(revealY4, 1)}' + (' ' * 2) + '|')
+  print('|' + ('the spaces'.center(25)) + '|  ' + f'{displayLine(revealY4, 0)}' + (' ' * 2) + '|')
+  print('|' + (' '.center(25)) + '|  ' + f'{displayLine(revealY3, 2)}' + (' ' * 2) + '|')
+  print('|' + (' \'|\' Is a vertical path.'.center(25)) + '|  ' + f'{displayLine(revealY3, 1)}' + (' ' * 2) + '|')
+  print('|' + (' \'+\' Is a turn or split  ') + '|  ' + f'{displayLine(revealY3, 0)}' + (' ' * 2) + '|')
+  print('|' + ('path.'.center(25)) + '|  ' + f'{displayLine(revealY2, 2)}' + (' ' * 2) + '|')
+  print('|' + (' \'-\' Is a side path.'.center(25)) + '|  ' + f'{displayLine(revealY2, 1)}' + (' ' * 2) + '|')
+  print('|' + (' ' * 25) + '|  ' + f'{displayLine(revealY2, 0)}' + (' ' * 2) + '|')
+  print('|' + ('You start at the bottom'.center(25)) + '|  ' + f'{displayLine(revealY1, 2)}' + (' ' * 2) + '|')
+  print('|' + ('left and end in the'.center(25)) + '|  ' + f'{displayLine(revealY1, 1)}' + (' ' * 2) + '|')
+  print('|' + ('top right!'.center(25)) + '|  ' + f'{displayLine(revealY1, 0)}' + (' ' * 2) + '|')
+  print('|' + (' ' * 25) + '|  ' + f'{displayLine(revealY0, 2)}' + (' ' * 2) + '|')
+  print('|' + (' ' * 25) + '|  ' + f'{displayLine(revealY0, 1)}' + (' ' * 2) + '|')
   print('|' + (' ' * 25) + '|  ' + ' | <-Start' + (' ' * 25) + '|')
   print('|' + ('_' * 25) + '|' + ('_' * 37) + '|')
 
