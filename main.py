@@ -1,6 +1,7 @@
 from os import system
 from time import sleep
 from random import randint
+from tkinter import Y
 # ---------------------------------------------------------------------- #
 # All default Global Variables will be here
 
@@ -497,40 +498,58 @@ def revealPath():
       return revealY3
     elif y == 4:
       return revealY4
-  up = ''
-  down = ''
-  left = ''
-  right = ''
+  movementOptions = []
   tile = f'{yaxis(yCord)[xCord]}'
   if tile == 'DU' or tile == 'NL' or tile == 'NR' or tile == 'NB' or tile == 'FW' or tile == 'V~' or tile == 'UL' or tile == 'UR':
-    up = ' up [U]'
+    movementOptions.append(' up [U]')
   if tile == 'DB' or tile == 'NL' or tile == 'NR' or tile == 'NU' or tile == 'FW' or tile == 'V~' or tile == 'BL' or tile == 'BR':
-    down = ' down [D]'
+    movementOptions.append(' down [D]')
   if tile == 'DL' or tile == 'NU' or tile == 'NR' or tile == 'NB' or tile == 'FW' or tile == 'H~' or tile == 'UL' or tile == 'BL':
-    left = ' left [L]'
+    movementOptions.append(' left [L]')
   if tile == 'DR' or tile == 'NL' or tile == 'NU' or tile == 'NB' or tile == 'FW' or tile == 'H~' or tile == 'UR' or tile == 'BR': 
-    right = ' right [R]'
+    movementOptions.append(' right [R]')
   coordinate(yCord)[xCord] = f'P{tile}'
-  displayMiniMap()
-  move = input(f'Would you like to go{up}{down}{left} or{right}? ')
-  if move == 'U':
-    coordinate(yCord)[xCord] = tile
-    yCord += 1
-    coordinate(yCord)[xCord] = f'P{tile}'
-  elif move == 'D':
-    coordinate(yCord)[xCord] = tile
-    yCord -= 1
-    coordinate(yCord)[xCord] = f'P{tile}'
-  elif move == 'R':
-    coordinate(yCord)[xCord] = tile
-    xCord += 1
-    coordinate(yCord)[xCord] = f'P{tile}'
-  elif move == 'L':
-    coordinate(yCord)[xCord] = tile
-    xCord -= 1
-    coordinate(yCord)[xCord] = f'P{tile}'
+  while True:
+    displayMiniMap()
+    if len(movementOptions) == 1:
+      move = input(f'You can only go{movementOptions[0]}. Please enter whats in the []. ').capitalize()
+    elif len(movementOptions) == 2:
+      move = input(f'Would you like to go{movementOptions[0]} or{movementOptions[1]}? ').capitalize()
+    elif len(movementOptions) == 3:
+      move = input(f'Would you like to go{movementOptions[0]},{movementOptions[1]} or{movementOptions[2]}? ').capitalize()
+    elif len(movementOptions) == 4:
+      move = input(f'Would you like to go{movementOptions[0]},{movementOptions[1]},{movementOptions[2]} or{movementOptions[3]}? ').capitalize()
 
-  displayMiniMap()
+    if move == 'U' and (' up [U]' in movementOptions):
+      coordinate(yCord)[xCord] = tile
+      if xCord == 10 and yCord == 4:
+        print('You Win!!')
+        break
+      yCord += 1
+      coordinate(yCord)[xCord] = f'P{tile}'
+      displayMiniMap()
+      break
+    elif move == 'D' and (' down [D]' in movementOptions):
+      coordinate(yCord)[xCord] = tile
+      if xCord == 0 and yCord == 0:
+        print('You decide you dont want to deal with this whole maze thing and leave forever. How boring.')
+        break
+      yCord -= 1
+      coordinate(yCord)[xCord] = f'P{tile}'
+      break
+    elif move == 'R' and (' right [R]' in movementOptions):
+      coordinate(yCord)[xCord] = tile
+      xCord += 1
+      coordinate(yCord)[xCord] = f'P{tile}'
+      displayMiniMap()
+      break
+    elif move == 'L' and (' left [L]' in movementOptions):
+      coordinate(yCord)[xCord] = tile
+      xCord -= 1
+      coordinate(yCord)[xCord] = f'P{tile}'
+      displayMiniMap()
+      break
+
   
 
 # ---------------------------------------------------------------------- #
@@ -538,7 +557,6 @@ def revealPath():
 createMaze()
 while True:
   revealPath()
-input('')
 
 # ---------------------------------------------------------------------- #
 # This is the actual game with all the storlines and options
