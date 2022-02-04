@@ -11,6 +11,9 @@ god = ' ' # Name of the players god
 godOrGoddess = 'Parent' # Gender of the players parent and wether to refer to them as god or goddess nr k,jgbn
 fatherOrMother = 'Parent'
 inventoryFull = False
+arrowhead = '\U000025CB'
+xCord = 0
+yCord = 0
 
 # ---------------------------------------------------------------------- #
 # All lists, dictionaries and other like things will be here
@@ -46,8 +49,8 @@ roomTypes = {
   #Name  bottom  middle  top
   'FW' : [' | ', '-+-', ' | '], # FW 'Four Way'
   #[ | ] Example top
-  #[-+-] Example middle
-  #[ | ] Example bottom
+  #[-+-] Example middle |
+  #[ | ] Example bottom Y-
   'V~' : [' | ', ' | ', ' | '], # V~ 'Vertical' 
   'H~' : ['   ', '---', '   '], # H~ 'Horizantal'
   'NB' : ['   ', '-+-', ' | '], # NB 'Everything but the bottom'
@@ -62,7 +65,22 @@ roomTypes = {
   'DL' : ['   ', '-  ', '   '], # DL 'Dead end from the left'
   'DB' : [' | ', '   ', '   '], # DB 'Dead end from the bottom'
   'DR' : ['   ', '  -', '   '], # DR 'Dead end from the right'
-  'E_' : ['   ', '   ', '   ']  # E_ 'Empty'
+  'E_' : ['   ', '   ', '   '], # E_ 'Empty'
+  'PFW' : [' | ', f'-{arrowhead}-', ' | '], # FW 'Four Way' with the player token
+  'PV~' : [' | ', f' {arrowhead} ', ' | '], # V~ 'Vertical' with the player token
+  'PH~' : ['   ', f'-{arrowhead}-', '   '], # H~ 'Horizantal' with the player token
+  'PNB' : ['   ', f'-{arrowhead}-', ' | '], # NB 'Everything but the bottom' with the player token
+  'PNL' : [' | ', f' {arrowhead}-', ' | '], # NL 'Everything but the left' with the player token
+  'PNR' : [' | ', f'-{arrowhead} ', ' | '], # NR 'Everything but the right' with the player token
+  'PNU' : [' | ', f'-{arrowhead}-', '   '], # NB 'Everything but the top' with the player token
+  'PUL' : ['   ', f'-{arrowhead} ', ' | '], # UL 'Goes up and then left' with the player token
+  'PUR' : ['   ', f' {arrowhead}-', ' | '], # UR 'Goes up and then right' with the player token
+  'PBL' : [' | ', f'-{arrowhead} ', '   '], # BL 'Goes from the left then down' with the player token
+  'PBR' : [' | ', f' {arrowhead}-', '   '], # BR 'Goes from the right then down' with the player token
+  'PDU' : ['   ', f' {arrowhead} ', ' | '], # DU 'Dead end from the top' with the player token
+  'PDL' : ['   ', f'-{arrowhead} ', '   '], # DL 'Dead end from the left' with the player token
+  'PDB' : [' | ', f' {arrowhead} ', '   '], # DB 'Dead end from the bottom' with the player token
+  'PDR' : ['   ', f' {arrowhead}-', '   ']  # DR 'Dead end from the right' with the player token
 }
 
 # ---------------------------------------------------------------------- #
@@ -265,19 +283,20 @@ def displayMiniMap():
 
 # ---------------------------------------------------------------------- #
   
+def yaxis(yLevel): #This turns any y level in y'that level' so I can acess that list easier
+  if yLevel == 0:
+    return y0
+  elif yLevel == 1:
+    return y1
+  elif yLevel == 2:
+    return y2
+  elif yLevel == 3:
+    return y3
+  elif yLevel == 4:
+    return y4
+
 def createMaze(): # Generates a Random Maze. Solveable and no empty spaces. All interconnected. 
   path = [[0, 0]] # This is where the coordinates of all the tiles added go
-  def yaxis(yLevel): #This turns any y level in y'that level' so I can acess that list easier
-    if yLevel == 0:
-      return y0
-    elif yLevel == 1:
-      return y1
-    elif yLevel == 2:
-      return y2
-    elif yLevel == 3:
-      return y3
-    elif yLevel == 4:
-      return y4
 
   def createMainPath(): # This creates the main or intended path. It is the path you have to follow and go through to get to the exit
     y = 0 # Think of the maze as a grid with each coordinate being a room 
@@ -462,10 +481,63 @@ def createMaze(): # Generates a Random Maze. Solveable and no empty spaces. All 
         path.remove(path[randomNumber])
   createSplitPaths()    
 
+
+
+def revealPath():
+  global yCord
+  global xCord
+  def coordinate(y):
+    if y == 0:
+      return revealY0
+    elif y == 1:
+      return revealY1
+    elif y == 2:
+      return revealY2
+    elif y == 3:
+      return revealY3
+    elif y == 4:
+      return revealY4
+  up = ''
+  down = ''
+  left = ''
+  right = ''
+  tile = f'{yaxis(yCord)[xCord]}'
+  if tile == 'DU' or tile == 'NL' or tile == 'NR' or tile == 'NB' or tile == 'FW' or tile == 'V~' or tile == 'UL' or tile == 'UR':
+    up = ' up [U]'
+  if tile == 'DB' or tile == 'NL' or tile == 'NR' or tile == 'NU' or tile == 'FW' or tile == 'V~' or tile == 'BL' or tile == 'BR':
+    down = ' down [D]'
+  if tile == 'DL' or tile == 'NU' or tile == 'NR' or tile == 'NB' or tile == 'FW' or tile == 'H~' or tile == 'UL' or tile == 'BL':
+    left = ' left [L]'
+  if tile == 'DR' or tile == 'NL' or tile == 'NU' or tile == 'NB' or tile == 'FW' or tile == 'H~' or tile == 'UR' or tile == 'BR': 
+    right = ' right [R]'
+  coordinate(yCord)[xCord] = f'P{tile}'
+  displayMiniMap()
+  move = input(f'Would you like to go{up}{down}{left} or{right}? ')
+  if move == 'U':
+    coordinate(yCord)[xCord] = tile
+    yCord += 1
+    coordinate(yCord)[xCord] = f'P{tile}'
+  elif move == 'D':
+    coordinate(yCord)[xCord] = tile
+    yCord -= 1
+    coordinate(yCord)[xCord] = f'P{tile}'
+  elif move == 'R':
+    coordinate(yCord)[xCord] = tile
+    xCord += 1
+    coordinate(yCord)[xCord] = f'P{tile}'
+  elif move == 'L':
+    coordinate(yCord)[xCord] = tile
+    xCord -= 1
+    coordinate(yCord)[xCord] = f'P{tile}'
+
+  displayMiniMap()
+  
+
 # ---------------------------------------------------------------------- #
 # This is the testing zone
 createMaze()
-displayMiniMap()
+while True:
+  revealPath()
 input('')
 
 # ---------------------------------------------------------------------- #
