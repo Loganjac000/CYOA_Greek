@@ -62,10 +62,10 @@ roomTypes = {
   'UR' : ['   ', ' +-', ' | '], # UR 'Goes up and then right'
   'BL' : [' | ', '-+ ', '   '], # BL 'Goes from the left then down'
   'BR' : [' | ', ' +-', '   '], # BR 'Goes from the right then down'
-  'DU' : ['   ', '   ', ' | '], # DU 'Dead end from the top'
-  'DL' : ['   ', '-  ', '   '], # DL 'Dead end from the left'
-  'DB' : [' | ', '   ', '   '], # DB 'Dead end from the bottom'
-  'DR' : ['   ', '  -', '   '], # DR 'Dead end from the right'
+  'DU' : ['   ', ' x ', ' | '], # DU 'Dead end from the top'
+  'DL' : ['   ', '-x ', '   '], # DL 'Dead end from the left'
+  'DB' : [' | ', ' x ', '   '], # DB 'Dead end from the bottom'
+  'DR' : ['   ', ' x-', '   '], # DR 'Dead end from the right'
   'E_' : ['   ', '   ', '   '], # E_ 'Empty'
   'PFW' : [' | ', f'-{arrowhead}-', ' | '], # FW 'Four Way' with the player token
   'PV~' : [' | ', f' {arrowhead} ', ' | '], # V~ 'Vertical' with the player token
@@ -78,10 +78,10 @@ roomTypes = {
   'PUR' : ['   ', f' {arrowhead}-', ' | '], # UR 'Goes up and then right' with the player token
   'PBL' : [' | ', f'-{arrowhead} ', '   '], # BL 'Goes from the left then down' with the player token
   'PBR' : [' | ', f' {arrowhead}-', '   '], # BR 'Goes from the right then down' with the player token
-  'PDU' : ['   ', f' {arrowhead} ', ' | '], # DU 'Dead end from the top' with the player token
-  'PDL' : ['   ', f'-{arrowhead} ', '   '], # DL 'Dead end from the left' with the player token
-  'PDB' : [' | ', f' {arrowhead} ', '   '], # DB 'Dead end from the bottom' with the player token
-  'PDR' : ['   ', f' {arrowhead}-', '   ']  # DR 'Dead end from the right' with the player token
+  'PDU' : ['   ', ' x ', f' {arrowhead} '], # DU 'Dead end from the top' with the player token
+  'PDL' : ['   ', f'{arrowhead}x ', '   '], # DL 'Dead end from the left' with the player token
+  'PDB' : [f' {arrowhead} ', ' x ', '   '], # DB 'Dead end from the bottom' with the player token
+  'PDR' : ['   ', f' x{arrowhead}', '   ']  # DR 'Dead end from the right' with the player token
 }
 
 # ---------------------------------------------------------------------- #
@@ -269,17 +269,17 @@ def displayMiniMap():
   print('|' + ('  Follow the lines NOT   ') + '|  ' + f'{displayLine(revealY4, 1)}' + (' ' * 2) + '|')
   print('|' + ('the spaces'.center(25)) + '|  ' + f'{displayLine(revealY4, 0)}' + (' ' * 2) + '|')
   print('|' + (' '.center(25)) + '|  ' + f'{displayLine(revealY3, 2)}' + (' ' * 2) + '|')
-  print('|' + (' \'|\' Is a vertical path.'.center(25)) + '|  ' + f'{displayLine(revealY3, 1)}' + (' ' * 2) + '|')
-  print('|' + (' \'+\' Is a turn or split  ') + '|  ' + f'{displayLine(revealY3, 0)}' + (' ' * 2) + '|')
-  print('|' + ('path.'.center(25)) + '|  ' + f'{displayLine(revealY2, 2)}' + (' ' * 2) + '|')
-  print('|' + (' \'-\' Is a side path.'.center(25)) + '|  ' + f'{displayLine(revealY2, 1)}' + (' ' * 2) + '|')
+  print('|' + ('\'|\' Is a vertical path. '.center(25)) + '|  ' + f'{displayLine(revealY3, 1)}' + (' ' * 2) + '|')
+  print('|' + (' \'-\' Is a side path.     ') + '|  ' + f'{displayLine(revealY3, 0)}' + (' ' * 2) + '|')
+  print('|' + (' \'+\' Is a turn or split  '.center(25)) + '|  ' + f'{displayLine(revealY2, 2)}' + (' ' * 2) + '|')
+  print('|' + ('path'.center(25)) + '|  ' + f'{displayLine(revealY2, 1)}' + (' ' * 2) + '|')
   print('|' + (' ' * 25) + '|  ' + f'{displayLine(revealY2, 0)}' + (' ' * 2) + '|')
-  print('|' + ('You start at the bottom'.center(25)) + '|  ' + f'{displayLine(revealY1, 2)}' + (' ' * 2) + '|')
-  print('|' + ('left and end in the'.center(25)) + '|  ' + f'{displayLine(revealY1, 1)}' + (' ' * 2) + '|')
-  print('|' + ('top right!'.center(25)) + '|  ' + f'{displayLine(revealY1, 0)}' + (' ' * 2) + '|')
-  print('|' + (' ' * 25) + '|  ' + f'{displayLine(revealY0, 2)}' + (' ' * 2) + '|')
-  print('|' + (' ' * 25) + '|  ' + f'{displayLine(revealY0, 1)}' + (' ' * 2) + '|')
-  print('|' + (' ' * 25) + '|  ' + ' | <-Start' + (' ' * 25) + '|')
+  print('|' + ('\'x\' repersents any dead'.center(25)) + '|  ' + f'{displayLine(revealY1, 2)}' + (' ' * 2) + '|')
+  print('|' + ('ends you\'ve encountered.'.center(25)) + '|  ' + f'{displayLine(revealY1, 1)}' + (' ' * 2) + '|')
+  print('|' + (' ' * 25) + '|  ' + f'{displayLine(revealY1, 0)}' + (' ' * 2) + '|')
+  print('|' + ('The \'\U000025CB\' is where your'.center(25)) + '|  ' + f'{displayLine(revealY0, 2)}' + (' ' * 2) + '|')
+  print('|' + ('character currently is.'.center(25)) + '|  ' + f'{displayLine(revealY0, 1)}' + (' ' * 2) + '|')
+  print('|' + (''.center(25)) + '|  ' + ' | <-Start' + (' ' * 25) + '|')
   print('|' + ('_' * 25) + '|' + ('_' * 37) + '|')
 
 # ---------------------------------------------------------------------- #
@@ -512,7 +512,7 @@ def revealPath():
   while True:
     displayMiniMap()
     if len(movementOptions) == 1:
-      move = input(f'You can only go{movementOptions[0]}. Please enter whats in the []. ').capitalize()
+      move = input(f'Oh no a dead end! You can only go{movementOptions[0]}. Please enter whats in the []. ').capitalize()
     elif len(movementOptions) == 2:
       move = input(f'Would you like to go{movementOptions[0]} or{movementOptions[1]}? ').capitalize()
     elif len(movementOptions) == 3:
@@ -552,9 +552,9 @@ def revealPath():
 
   
 
+createMaze()
 # ---------------------------------------------------------------------- #
 # This is the testing zone
-createMaze()
 while True:
   revealPath()
 
