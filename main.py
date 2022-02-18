@@ -2,6 +2,7 @@ from os import system
 from time import sleep
 from random import randint
 import maze_info
+import all_rooms
 # ---------------------------------------------------------------------- #
 # All default Global Variables will be here
 
@@ -33,55 +34,6 @@ items = {
   "Basic Sword" : "It\'s a basic shield. + 1 to melee attacks.",
   "Basic Shield" : "It\'s a basic shield. + 1 to armor.",
   "Athena\'s Shield" : "A special shield only given to Athena\'s champion. +2 to armor."
-}
-y4 = ['E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_']
-y3 = ['E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_']
-y2 = ['E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_']
-y1 = ['E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_']
-y0 = ['E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_']
-
-revealY4 = ['E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_']
-revealY3 = ['E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_']
-revealY2 = ['E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_']
-revealY1 = ['E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_']
-revealY0 = ['E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_', 'E_']
-
-roomTypes = {
-  #Name  bottom  middle  top
-  'FW' : [' | ', '-+-', ' | '], # FW 'Four Way'
-  #[ | ] Example top
-  #[-+-] Example middle |
-  #[ | ] Example bottom Y-
-  'V~' : [' | ', ' | ', ' | '], # V~ 'Vertical' 
-  'H~' : ['   ', '---', '   '], # H~ 'Horizantal'
-  'NB' : ['   ', '-+-', ' | '], # NB 'Everything but the bottom'
-  'NL' : [' | ', ' +-', ' | '], # NL 'Everything but the left'
-  'NR' : [' | ', '-+ ', ' | '], # NR 'Everything but the right'
-  'NU' : [' | ', '-+-', '   '], # NB 'Everything but the top'
-  'UL' : ['   ', '-+ ', ' | '], # UL 'Goes up and then left'
-  'UR' : ['   ', ' +-', ' | '], # UR 'Goes up and then right'
-  'BL' : [' | ', '-+ ', '   '], # BL 'Goes from the left then down'
-  'BR' : [' | ', ' +-', '   '], # BR 'Goes from the right then down'
-  'DU' : ['   ', ' x ', ' | '], # DU 'Dead end from the top'
-  'DL' : ['   ', '-x ', '   '], # DL 'Dead end from the left'
-  'DB' : [' | ', ' x ', '   '], # DB 'Dead end from the bottom'
-  'DR' : ['   ', ' x-', '   '], # DR 'Dead end from the right'
-  'E_' : ['   ', '   ', '   '], # E_ 'Empty'
-  'PFW' : [' | ', f'-{arrowhead}-', ' | '], # FW 'Four Way' with the player token
-  'PV~' : [' | ', f' {arrowhead} ', ' | '], # V~ 'Vertical' with the player token
-  'PH~' : ['   ', f'-{arrowhead}-', '   '], # H~ 'Horizantal' with the player token
-  'PNB' : ['   ', f'-{arrowhead}-', ' | '], # NB 'Everything but the bottom' with the player token
-  'PNL' : [' | ', f' {arrowhead}-', ' | '], # NL 'Everything but the left' with the player token
-  'PNR' : [' | ', f'-{arrowhead} ', ' | '], # NR 'Everything but the right' with the player token
-  'PNU' : [' | ', f'-{arrowhead}-', '   '], # NB 'Everything but the top' with the player token
-  'PUL' : ['   ', f'-{arrowhead} ', ' | '], # UL 'Goes up and then left' with the player token
-  'PUR' : ['   ', f' {arrowhead}-', ' | '], # UR 'Goes up and then right' with the player token
-  'PBL' : [' | ', f'-{arrowhead} ', '   '], # BL 'Goes from the left then down' with the player token
-  'PBR' : [' | ', f' {arrowhead}-', '   '], # BR 'Goes from the right then down' with the player token
-  'PDU' : ['   ', ' x ', f' {arrowhead} '], # DU 'Dead end from the top' with the player token
-  'PDL' : ['   ', f'{arrowhead}x ', '   '], # DL 'Dead end from the left' with the player token
-  'PDB' : [f' {arrowhead} ', ' x ', '   '], # DB 'Dead end from the bottom' with the player token
-  'PDR' : ['   ', f' x{arrowhead}', '   ']  # DR 'Dead end from the right' with the player token
 }
 
 # ---------------------------------------------------------------------- #
@@ -233,60 +185,10 @@ def displayInvintory():
   print('|' + ('-' * 19) + '+' + ('-' * 43) + '|')
   printSlot(3)
   print('|' + ('_' * 63) + '|')
-
-def displayJournal():
-  system('cls')
-  print('_' * 65)
-  print('|' + (' ' * 63) + '|')
-  print('|' + (' ' * 63) + '|')
-  print('|' + (' ' * 63) + '|')
-  print('|' + (' ' * 63) + '|')
-  print('|' + (' ' * 63) + '|')
-  print('|' + (' ' * 63) + '|')
-  print('|' + (' ' * 63) + '|')
-  print('|' + (' ' * 63) + '|')
-  print('|' + (' ' * 63) + '|')
-  print('|' + (' ' * 63) + '|')
-  print('|' + (' ' * 63) + '|')
-  print('|' + (' ' * 63) + '|')
-  print('|' + (' ' * 63) + '|')
-  print('|' + (' ' * 63) + '|')
-  print('|' + (' ' * 63) + '|')
-  print('|' + ('_' * 63) + '|')
-
-def displayMiniMap():
-  def displayLine(yline, subLine):
-    previousWhatToReturn = ''
-    for i in range(11):
-      addToWhatToReturn = (roomTypes[f'{yline[i]}'][subLine])
-      whatToReturn = f'{previousWhatToReturn}{addToWhatToReturn}'
-      previousWhatToReturn = whatToReturn
-    return whatToReturn
-  system('cls')
-  print('_' * 65)
-  print('|' + ('IMPORTANT INFO:'.center(25)) + '|  ' + ('Mini Map:' + ' ' * 20) + 'Exit  |')
-  print('|' + (' ' * 25) + '|  ' + f'{displayLine(revealY4, 2)}' + (' ' * 2) + '|')
-  print('|' + ('Follow the line until'.center(25)) + '|  ' + f'{displayLine(revealY4, 1)}' + (' ' * 2) + '|')
-  print('|' + ('you reach the exit!'.center(25)) + '|  ' + f'{displayLine(revealY4, 0)}' + (' ' * 2) + '|')
-  print('|' + (' '.center(25)) + '|  ' + f'{displayLine(revealY3, 2)}' + (' ' * 2) + '|')
-  print('|' + ('\'|\' Is a vertical path. '.center(25)) + '|  ' + f'{displayLine(revealY3, 1)}' + (' ' * 2) + '|')
-  print('|' + (' \'-\' Is a side path.     ') + '|  ' + f'{displayLine(revealY3, 0)}' + (' ' * 2) + '|')
-  print('|' + (' \'+\' Is a turn or split  '.center(25)) + '|  ' + f'{displayLine(revealY2, 2)}' + (' ' * 2) + '|')
-  print('|' + ('path'.center(25)) + '|  ' + f'{displayLine(revealY2, 1)}' + (' ' * 2) + '|')
-  print('|' + (' ' * 25) + '|  ' + f'{displayLine(revealY2, 0)}' + (' ' * 2) + '|')
-  print('|' + ('\'x\' repersents any dead'.center(25)) + '|  ' + f'{displayLine(revealY1, 2)}' + (' ' * 2) + '|')
-  print('|' + ('ends you\'ve encountered.'.center(25)) + '|  ' + f'{displayLine(revealY1, 1)}' + (' ' * 2) + '|')
-  print('|' + (' ' * 25) + '|  ' + f'{displayLine(revealY1, 0)}' + (' ' * 2) + '|')
-  print('|' + ('The \'\U000025CB\' is where your'.center(25)) + '|  ' + f'{displayLine(revealY0, 2)}' + (' ' * 2) + '|')
-  print('|' + ('character currently is.'.center(25)) + '|  ' + f'{displayLine(revealY0, 1)}' + (' ' * 2) + '|')
-  print('|' + (''.center(25)) + '|  ' + ' | <-Start' + (' ' * 25) + '|')
-  print('|' + ('_' * 25) + '|' + ('_' * 37) + '|')
-  
 maze_info.createMaze()
 # ---------------------------------------------------------------------- #
 # This is the testing zone
-while True:
-  maze_info.revealPath()
+
 
 # ---------------------------------------------------------------------- #
 # This is the actual game with all the storlines and options
