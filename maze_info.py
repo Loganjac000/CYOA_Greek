@@ -1,7 +1,7 @@
 from os import system
 from random import randint
 
-arrowhead = '\U000025CB'
+icon = '\U000025CB'
 xCord = 0
 yCord = 0
 
@@ -38,21 +38,21 @@ roomTypes = {
   'DB' : [' | ', ' x ', '   '], # DB 'Dead end from the bottom'
   'DR' : ['   ', ' x-', '   '], # DR 'Dead end from the right'
   'E_' : ['   ', '   ', '   '], # E_ 'Empty'
-  'PFW' : [' | ', f'-{arrowhead}-', ' | '], # FW 'Four Way' with the player token
-  'PV~' : [' | ', f' {arrowhead} ', ' | '], # V~ 'Vertical' with the player token
-  'PH~' : ['   ', f'-{arrowhead}-', '   '], # H~ 'Horizantal' with the player token
-  'PNB' : ['   ', f'-{arrowhead}-', ' | '], # NB 'Everything but the bottom' with the player token
-  'PNL' : [' | ', f' {arrowhead}-', ' | '], # NL 'Everything but the left' with the player token
-  'PNR' : [' | ', f'-{arrowhead} ', ' | '], # NR 'Everything but the right' with the player token
-  'PNU' : [' | ', f'-{arrowhead}-', '   '], # NB 'Everything but the top' with the player token
-  'PUL' : ['   ', f'-{arrowhead} ', ' | '], # UL 'Goes up and then left' with the player token
-  'PUR' : ['   ', f' {arrowhead}-', ' | '], # UR 'Goes up and then right' with the player token
-  'PBL' : [' | ', f'-{arrowhead} ', '   '], # BL 'Goes from the left then down' with the player token
-  'PBR' : [' | ', f' {arrowhead}-', '   '], # BR 'Goes from the right then down' with the player token
-  'PDU' : ['   ', ' x ', f' {arrowhead} '], # DU 'Dead end from the top' with the player token
-  'PDL' : ['   ', f'{arrowhead}x ', '   '], # DL 'Dead end from the left' with the player token
-  'PDB' : [f' {arrowhead} ', ' x ', '   '], # DB 'Dead end from the bottom' with the player token
-  'PDR' : ['   ', f' x{arrowhead}', '   ']  # DR 'Dead end from the right' with the player token
+  'PFW' : [' | ', f'-{icon}-', ' | '], # FW 'Four Way' with the player token
+  'PV~' : [' | ', f' {icon} ', ' | '], # V~ 'Vertical' with the player token
+  'PH~' : ['   ', f'-{icon}-', '   '], # H~ 'Horizantal' with the player token
+  'PNB' : ['   ', f'-{icon}-', ' | '], # NB 'Everything but the bottom' with the player token
+  'PNL' : [' | ', f' {icon}-', ' | '], # NL 'Everything but the left' with the player token
+  'PNR' : [' | ', f'-{icon} ', ' | '], # NR 'Everything but the right' with the player token
+  'PNU' : [' | ', f'-{icon}-', '   '], # NB 'Everything but the top' with the player token
+  'PUL' : ['   ', f'-{icon} ', ' | '], # UL 'Goes up and then left' with the player token
+  'PUR' : ['   ', f' {icon}-', ' | '], # UR 'Goes up and then right' with the player token
+  'PBL' : [' | ', f'-{icon} ', '   '], # BL 'Goes from the left then down' with the player token
+  'PBR' : [' | ', f' {icon}-', '   '], # BR 'Goes from the right then down' with the player token
+  'PDU' : ['   ', ' x ', f' {icon} '], # DU 'Dead end from the top' with the player token
+  'PDL' : ['   ', f'{icon}x ', '   '], # DL 'Dead end from the left' with the player token
+  'PDB' : [f' {icon} ', ' x ', '   '], # DB 'Dead end from the bottom' with the player token
+  'PDR' : ['   ', f' x{icon}', '   ']  # DR 'Dead end from the right' with the player token
 }
 
 
