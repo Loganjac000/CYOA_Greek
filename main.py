@@ -188,7 +188,8 @@ def displayInvintory():
 maze_info.createMaze()
 # ---------------------------------------------------------------------- #
 # This is the testing zone
-
+while True:
+  maze_info.revealPath()
 
 # ---------------------------------------------------------------------- #
 # This is the actual game with all the storlines and options
