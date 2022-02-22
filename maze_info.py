@@ -1,128 +1,186 @@
 from os import system
 from random import randint
 
+from pip import main
+
 icon = '\U000025CB'
 xCord = 0
 yCord = 0
+mainpath = 0
 # These are where we keep all the info about each tile. a tile is one room and all the infor about it
 # the y_ is what y level the tile is on. It is a list with 11 list elements for each of the 11 x points on each y line. 4 y lines times 11 x points per line equals 44 total tiles
 # Each of the x points is its own list. the first element on that list is the room typee,  the second element is whether it is one the main path or split path.
 # The third element is what type of encounter it is. The fourth one is what specific encounter it is. 
 y4 = [
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'}]
+   'revealed' : 'E_',
+   'isItMain' : True}]
 y3 = [
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'}]
+   'revealed' : 'E_',
+   'isItMain' : True}]
 y2 = [
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'}]
+   'revealed' : 'E_',
+   'isItMain' : True}]
 y1 = [
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'}]
+   'revealed' : 'E_',
+   'isItMain' : True}]
 y0 = [
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'},
+   'revealed' : 'E_',
+   'isItMain' : True},
   {'roomtype' : 'E_',
-   'revealed' : 'E_'}]
+   'revealed' : 'E_',
+   'isItMain' : True}]
 roomTypes = {
   #Name  bottom  middle  top
   'FW' : [' | ', '-+-', ' | '], # FW 'Four Way'
@@ -217,6 +275,24 @@ def displayMiniMapForTesting():
   print('|' + (''.center(25)) + '|  ' + ' | <-Start' + (' ' * 25) + '|')
   print('|' + ('_' * 25) + '|' + ('_' * 37) + '|')
 # ---------------------------------------------------------------------- #
+def loopThroughMaze(search, look):
+  count = 0
+  for x in y4:
+    if y4[x][search] == look:
+      count += 1
+  for x in y3:
+    if y4[x][search] == look:
+      count += 1
+  for x in y2:
+    if y4[x][search] == look:
+      count += 1
+  for x in y1:
+    if y4[x][search] == look:
+      count += 1
+  for x in y0:
+    if y4[x][search] == look:
+      count += 1
+  return count
   
 def yaxis(yLevel): #This turns any y level in y'that level' so I can acess that list easier
   if yLevel == 0:
@@ -229,12 +305,6 @@ def yaxis(yLevel): #This turns any y level in y'that level' so I can acess that 
     return y3
   elif yLevel == 4:
     return y4
-
-def findInfo():
-  tile = input('Type tile coordinate as in x,y: ').split(',')
-  x = (int(tile[0]))
-  y = (int(tile[1]))
-  return yaxis(y)[x]
 
 def createMaze(): # Generates a Random Maze. Solveable and no empty spaces. All interconnected. 
   path = [[0, 0]] # This is where the coordinates of all the tiles added go
@@ -355,7 +425,8 @@ def createMaze(): # Generates a Random Maze. Solveable and no empty spaces. All 
           (yaxis(4))[10]['roomtype'] = 'UL'
         break
   createMainPath()
-
+  global mainpath
+  mainpath = path.copy()
   def createSplitPaths(): # This runs after the Ai creates the main pathway. The porpuse of this function is to create a bunch of false paths until it is no longer abe to do so.
     while len(path) != 0: # If there is no longer any paths left then the loop ends since it cant create any more falce paths
       randomNumber = randint(0, (len(path) - 1)) # The Ai chooses a random tile that is on the path
@@ -408,30 +479,25 @@ def createMaze(): # Generates a Random Maze. Solveable and no empty spaces. All 
         if path[randomNumber][1] + 1 == avialableSurroundings[randomNumber2][1]: # Sees what direction the new tile is and changes the tile leading into the new tile so it looks like it is leading in to the new tile
           (yaxis(y))[x]['roomtype'] = changeDict[(yaxis(y))[x]['roomtype']][1]
           (yaxis(y + 1))[x]['roomtype'] = 'DB' # Makes the tile that is being lead into
-          (yaxis(y + 1))[x]['isItMain'] = 'Split' # Makes note that this is a split path
+          (yaxis(y + 1))[x]['isItMain'] =  False # Makes note that this is a split path
         elif path[randomNumber][1] - 1 == avialableSurroundings[randomNumber2][1]:
           (yaxis(y))[x]['roomtype'] = changeDict[(yaxis(y))[x]['roomtype']][3]
           (yaxis(y - 1))[x]['roomtype'] = 'DU'
-          (yaxis(y - 1))[x]['isItMain'] = 'Split '
+          (yaxis(y - 1))[x]['isItMain'] = False
         elif path[randomNumber][0] + 1 == avialableSurroundings[randomNumber2][0]:
           (yaxis(y))[x]['roomtype'] = changeDict[(yaxis(y))[x]['roomtype']][0]
           (yaxis(y))[x + 1]['roomtype'] = 'DL'
-          (yaxis(y))[x + 1]['isItMain'] = 'Split'
+          (yaxis(y))[x + 1]['isItMain'] = False
         elif path[randomNumber][0] - 1 == avialableSurroundings[randomNumber2][0]:
           (yaxis(y))[x]['roomtype'] = changeDict[(yaxis(y))[x]['roomtype']][2]
           (yaxis(y))[x - 1]['roomtype'] = 'DR'
-          (yaxis(y))[x - 1]['isItMain'] = 'Split'
+          (yaxis(y))[x - 1]['isItMain'] = False
         path.append(avialableSurroundings[randomNumber2]) # Adds new tile to the list of paths since it can be then added to later
       elif len(avialableSurroundings) == 0: # If there is no empty spots in the surroundings then remove that option from the path list so it doesn't accidently get chosen again since its non to not lead anywhere
         path.remove(path[randomNumber])
   createSplitPaths()
-  displayMiniMapForTesting()
-  while True:
-    print(findInfo())
-    b = input('Break? ')
-    if b == 'y':
-      break
-  
+  test()
+
 def revealPath():
   global yCord
   global xCord
@@ -488,3 +554,30 @@ def revealPath():
       displayMiniMap()
       break
 # --- End of reveal path function --- #
+
+mazeInfo = {}
+def findInfo(tile):
+  x = (int(tile[0]))
+  y = (int(tile[1]))
+  return yaxis(y)[x]
+def test():
+  displayMiniMapForTesting()
+  print(mainpath)
+  numberOfSplitPaths = 0
+  for x in mainpath:
+    mainPathRoom = yaxis(x[1])[x[0]]['roomtype']
+    if 'N' in mainPathRoom:
+      numberOfSplitPaths += 1
+      print(mainPathRoom)
+    elif mainPathRoom == 'FW':
+      numberOfSplitPaths += 2
+      print(mainPathRoom)
+  mazeInfo['numberofSplitPaths'] = numberOfSplitPaths
+  print(len(mainpath))
+  print(mazeInfo['numberofSplitPaths'])
+  while True:
+    tile = input('Type tile coordinate as in x,y: ').split(',')
+    print(findInfo(tile))
+    b = input('Break? ')
+    if b == 'y':
+      break
