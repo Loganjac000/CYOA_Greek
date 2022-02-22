@@ -44,7 +44,9 @@ y4 = [
    'isItMain' : True},
   {'roomtype' : 'E_',
    'revealed' : 'E_',
-   'isItMain' : True}]
+   'isItMain' : True,
+   'tileType' : 'Battle',
+   'encounter' : 'Typhoon'}]
 y3 = [
   {'roomtype' : 'E_',
    'revealed' : 'E_',
@@ -569,6 +571,7 @@ def test():
     if 'N' in mainPathRoom:
       numberOfSplitPaths += 1
       print(mainPathRoom)
+      print(findSplit(x, mainPathRoom))
     elif mainPathRoom == 'FW':
       numberOfSplitPaths += 2
       print(mainPathRoom)
@@ -581,3 +584,55 @@ def test():
     b = input('Break? ')
     if b == 'y':
       break
+
+def findSplit(tile, roomType):
+  if 'N' in roomType:
+    def checkUp():
+      if yaxis(tile[1] + 1)[tile[0]]['isItMain'] == False:
+        return 'up'
+      else:
+        return 'invalid'
+    def checkDown():
+      if tile != [0,0] and yaxis(tile[1] - 1)[tile[0]]['isItMain'] == False:
+        return 'down'
+      else:
+        return 'invalid'
+    def checkRight():
+      if yaxis(tile[1])[tile[0] + 1]['isItMain'] == False:
+        return 'right'
+      else:
+        return 'invalid'
+    def checkLeft():
+      if yaxis(tile[1])[tile[0] - 1]['isItMain'] == False:
+        return 'left'
+      else:
+        return 'invalid'
+
+    if roomType == 'NB':
+      if checkRight() != 'invalid':
+        return 'right'
+      elif checkLeft() != 'invalid':
+        return 'left'
+      elif checkUp() != 'invalid':
+        return 'up'
+    elif roomType == 'NU':
+      if checkRight() != 'invalid':
+        return 'right'
+      elif checkLeft() != 'invalid':
+        return 'left'
+      elif checkDown() != 'invalid':
+        return 'down'
+    elif roomType == 'NL':
+      if checkRight() != 'invalid':
+        return 'right'
+      elif checkDown() != 'invalid':
+        return 'down'
+      elif checkUp() != 'invalid':
+        return 'up'
+    elif roomType == 'NR':
+      if checkDown() != 'invalid':
+        return 'down'
+      elif checkLeft() != 'invalid':
+        return 'left'
+      elif checkUp() != 'invalid':
+        return 'up'
