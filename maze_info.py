@@ -347,7 +347,8 @@ def createMaze(): # Generates a Random Maze. Solveable and no empty spaces. All 
               previous = 'x-1'
             path.pop() # Deletes that reference tile it used to find the direction
             break
-
+      
+      
       if previous == 'x+1': # If the previous tile leads in from the left then there are only certian things the next tile can be.
         randomNumber = randint(1,7)
         if randomNumber >= 1 and randomNumber <= 4 and x != 10: # The likelyhood that it goes right is 4 times as likely since there is a lot of ground to cover going right
@@ -555,29 +556,24 @@ def revealPath():
       yaxis(yCord)[xCord]['revealed'] = f'P{tile}'
       displayMiniMap()
       break
-# --- End of reveal path function --- #
+# ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------- End of reveal path function ------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
 
-mazeInfo = {}
 def findInfo(tile):
   x = (int(tile[0]))
   y = (int(tile[1]))
   return yaxis(y)[x]
+
+
 def test():
   displayMiniMapForTesting()
   print(mainpath)
-  numberOfSplitPaths = 0
-  for x in mainpath:
-    mainPathRoom = yaxis(x[1])[x[0]]['roomtype']
-    if 'N' in mainPathRoom:
-      numberOfSplitPaths += 1
-      print(mainPathRoom)
-      print(findSplit(x, mainPathRoom))
-    elif mainPathRoom == 'FW':
-      numberOfSplitPaths += 2
-      print(mainPathRoom)
-  mazeInfo['numberofSplitPaths'] = numberOfSplitPaths
-  print(len(mainpath))
-  print(mazeInfo['numberofSplitPaths'])
+  for cords in mainpath:
+    mainPathRoom = yaxis(cords[1])[cords[0]]['roomtype']
+    if 'N' in mainPathRoom or mainPathRoom == 'FW':
+      findLengthofSplitPath(cords, mainPathRoom)
+
   while True:
     tile = input('Type tile coordinate as in x,y: ').split(',')
     print(findInfo(tile))
@@ -586,53 +582,156 @@ def test():
       break
 
 def findSplit(tile, roomType):
-  if 'N' in roomType:
-    def checkUp():
-      if yaxis(tile[1] + 1)[tile[0]]['isItMain'] == False:
-        return 'up'
-      else:
-        return 'invalid'
-    def checkDown():
-      if tile != [0,0] and yaxis(tile[1] - 1)[tile[0]]['isItMain'] == False:
-        return 'down'
-      else:
-        return 'invalid'
-    def checkRight():
-      if yaxis(tile[1])[tile[0] + 1]['isItMain'] == False:
-        return 'right'
-      else:
-        return 'invalid'
-    def checkLeft():
-      if yaxis(tile[1])[tile[0] - 1]['isItMain'] == False:
-        return 'left'
-      else:
-        return 'invalid'
+  def checkUp():
+    if yaxis(tile[1] + 1)[tile[0]]['isItMain'] == False:
+      return 'up'
+    else:
+      return 'invalid'
+  def checkDown():
+    if tile != [0,0] and yaxis(tile[1] - 1)[tile[0]]['isItMain'] == False:
+      return 'down'
+    else:
+      return 'invalid'
+  def checkRight():
+    if yaxis(tile[1])[tile[0] + 1]['isItMain'] == False:
+      return 'right'
+    else:
+      return 'invalid'
+  def checkLeft():
+    if yaxis(tile[1])[tile[0] - 1]['isItMain'] == False:
+      return 'left'
+    else:
+      return 'invalid'
+  splitpath = []
 
-    if roomType == 'NB':
-      if checkRight() != 'invalid':
-        return 'right'
-      elif checkLeft() != 'invalid':
-        return 'left'
-      elif checkUp() != 'invalid':
-        return 'up'
-    elif roomType == 'NU':
-      if checkRight() != 'invalid':
-        return 'right'
-      elif checkLeft() != 'invalid':
-        return 'left'
-      elif checkDown() != 'invalid':
-        return 'down'
-    elif roomType == 'NL':
-      if checkRight() != 'invalid':
-        return 'right'
-      elif checkDown() != 'invalid':
-        return 'down'
-      elif checkUp() != 'invalid':
-        return 'up'
-    elif roomType == 'NR':
+  if 'N' in roomType:
+    if 'B' not in roomType:
       if checkDown() != 'invalid':
-        return 'down'
-      elif checkLeft() != 'invalid':
-        return 'left'
-      elif checkUp() != 'invalid':
-        return 'up'
+        splitpath.append('down')
+    if 'U' not in roomType:
+      if checkUp() != 'invalid':
+        splitpath.append('up')
+    if 'R' not in roomType:
+      if checkRight() != 'invalid':
+        splitpath.append('right')
+    if 'L' not in roomType:
+      if checkLeft() != 'invalid':
+        splitpath.append('left')
+
+  elif roomType == 'FW':
+    if checkRight() != 'invalid':
+      splitpath.append('right')
+    if checkLeft() != 'invalid':
+      splitpath.append('left')
+    if checkDown() != 'invalid':
+      splitpath.append('down')
+    if checkUp() != 'invalid':
+      splitpath.append('up')
+  return splitpath
+
+def findLengthofSplitPath(starterTile, starterRoomType):
+  directionDict = {
+    'V~' : {
+      'up' : 'up', #If you go up into a vertical line the you exit up out of it
+      'down' : 'down'
+    },
+    'H~' : {
+      'right' : 'right',
+      'left' : 'left'
+    },
+    'UL' : {
+      'right' : 'up',
+      'down' : 'left'
+    },
+    'UR' : {
+      'left' : 'up',
+      'down' : 'right'
+    },
+    'BR' : {
+      'up' : 'right',
+      'left' : 'down'
+    },
+    'BL' : {
+      'up' : 'left',
+      'right' : 'down'
+    },
+    'oposite' : {
+      'down' : 'up',
+      'up' : 'down',
+      'left' : 'right',
+      'right' : 'left'
+    }
+  }
+
+  def search(direction, location):
+    x = location[0]
+    y = location[1]
+    if direction == 'right':
+      x += 1
+    elif direction == 'left':
+      x -= 1
+    elif direction == 'up':
+      y += 1
+    elif direction == 'down':
+      y -= 1
+    return [x, y]
+  
+  searchDirections = findSplit(starterTile, starterRoomType) # Will be a list such as ['up'] or if starter tile is a FW ['Up', 'Down']
+  print(starterRoomType)
+  print(starterTile)
+  falsePathInfo = []
+
+  falsePathCords = []
+  if starterRoomType == 'FW':
+    neededDeadEnds = 2
+  else:
+    neededDeadEnds = 1
+    
+  while True:
+    print(searchDirections)
+    for direction in searchDirections: #For each direction in searchdirections 
+      cordinate = starterTile
+      previousDirection = direction
+      while True:
+        cordinate = search(previousDirection, cordinate)
+        roomtype = yaxis(cordinate[1])[cordinate[0]]['roomtype']
+        print(previousDirection)
+        print(cordinate)
+        print(roomtype)
+        if 'D' in roomtype:
+          falsePathCords.append(previousDirection)
+          print(f'Hit {roomtype}')
+          neededDeadEnds -= 1
+          break
+        elif 'N' in roomtype:
+          falsePathCords.append(previousDirection)
+          print(f'Hit {roomtype}')
+          neededDeadEnds += 1        
+          break
+        elif roomtype == 'FW':
+          falsePathCords.append(previousDirection)
+          print(f'Hit {roomtype}')
+          neededDeadEnds += 2        
+          break
+        else:
+          falsePathCords.append(previousDirection)
+          previousDirection = directionDict[roomtype][previousDirection]
+      print(previousDirection)
+      print(falsePathCords)
+    print(neededDeadEnds)
+
+    if neededDeadEnds <= 0:
+      break
+    newdick = {
+      'NL' : ['up', 'down', 'right'],
+      'NR' : ['left', 'down', 'up'],
+      'NB' : ['up', 'left', 'right'],
+      'NU' : ['down', 'left', 'right'],
+      'FW' : ['up', 'left', 'down', 'right']
+    }
+    searchDirections = newdick[roomtype]
+    whatToRemove = directionDict['oposite'][previousDirection]
+    print(whatToRemove)
+    searchDirections.remove(whatToRemove)
+    starterTile = cordinate
+    print('e')
