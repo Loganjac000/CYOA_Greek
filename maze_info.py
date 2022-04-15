@@ -1,5 +1,6 @@
 from os import system
 from random import randint
+import sys
 
 from pip import main
 
@@ -679,15 +680,24 @@ def findLengthofSplitPath(starterTile, starterRoomType):
   searchDirections = findSplit(starterTile, starterRoomType) # Will be a list such as ['up'] or if starter tile is a FW ['Up', 'Down']
   print(starterRoomType)
   print(starterTile)
-  falsePathInfo = []
 
   falsePathCords = []
+  funTiles = []
   if starterRoomType == 'FW':
+    funTiles.append(starterTile)
+    funTiles.append(searchDirections)
     neededDeadEnds = 2
   else:
     neededDeadEnds = 1
     
   while True:
+    newdick = {
+      'NL' : ['up', 'down', 'right'],
+      'NR' : ['left', 'down', 'up'],
+      'NB' : ['up', 'left', 'right'],
+      'NU' : ['down', 'left', 'right'],
+      'FW' : ['up', 'left', 'down', 'right']
+    }
     print(searchDirections)
     for direction in searchDirections: #For each direction in searchdirections 
       cordinate = starterTile
@@ -707,6 +717,10 @@ def findLengthofSplitPath(starterTile, starterRoomType):
           falsePathCords.append(previousDirection)
           print(f'Hit {roomtype}')
           neededDeadEnds += 1        
+          funTiles.append(cordinate)
+          fun = newdick[roomtype]
+          fun.remove(directionDict['oposite'][previousDirection])
+          funTiles.append(fun)
           break
         elif roomtype == 'FW':
           falsePathCords.append(previousDirection)
@@ -721,17 +735,13 @@ def findLengthofSplitPath(starterTile, starterRoomType):
     print(neededDeadEnds)
 
     if neededDeadEnds <= 0:
+      system('clear')
+      displayMiniMapForTesting()
       break
-    newdick = {
-      'NL' : ['up', 'down', 'right'],
-      'NR' : ['left', 'down', 'up'],
-      'NB' : ['up', 'left', 'right'],
-      'NU' : ['down', 'left', 'right'],
-      'FW' : ['up', 'left', 'down', 'right']
-    }
+    print(f'Fun Tiles: {funTiles}')
     searchDirections = newdick[roomtype]
     whatToRemove = directionDict['oposite'][previousDirection]
     print(whatToRemove)
     searchDirections.remove(whatToRemove)
     starterTile = cordinate
-    print('e')
+    print('--------')
